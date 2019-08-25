@@ -1,0 +1,22 @@
+{
+  "name": "ulsanbus",
+  "version": "1.0.0",
+  "description": "ulsan bus information web application",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatoba29/ulsanbus.git"
+  },
+  "author": "hatoba29",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hatoba29/ulsanbus/issues"
+  },
+  "homepage": "https://github.com/hatoba29/ulsanbus#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
