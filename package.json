@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/hatoba29/ulsanbus#readme",
   "dependencies": {
-    "request": "^2.88.0"
+    "nedb": "^1.8.0",
+    "request": "^2.88.0",
+    "xml2js": "^0.4.19"
   }
 }
