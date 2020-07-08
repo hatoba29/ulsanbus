@@ -4,7 +4,7 @@
   "description": "ulsan bus information web application",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel --hmr-hostname localhost index.html"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,18 @@
   },
   "homepage": "https://github.com/hatoba29/ulsanbus#readme",
   "dependencies": {
-    "nedb": "^1.8.0",
-    "request": "^2.88.0",
-    "xml2js": "^0.4.19"
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "api": "^2.1.6",
+    "axios": "^0.19.2",
+    "key": "^0.1.11",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "sass": "^1.26.10",
+    "typescript": "^3.9.6"
   }
 }
