@@ -1,7 +1,21 @@
+<script lang="ts">
+	const init = async () => {
+		const res = await fetch('/api/init')
+		const data = await res.json()
+		console.log(data)
+		return data
+	}
+</script>
+
 <main class="wrapper">
-	<h1 class="title">울산버스</h1>
-	<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" />
-	<div class="result" />
+	{#await init()}
+		<h1>Loading...</h1>
+	{:then data}
+		<h1 class="title">울산버스</h1>
+		<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" />
+		<p>{data.route.tableInfo.totalCnt}</p>
+		<div class="result" />
+	{/await}
 </main>
 
 <style lang="scss">
