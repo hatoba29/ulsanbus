@@ -13,7 +13,8 @@
 	},
 	"dependencies": {
 		"axios": "^1.2.6",
-		"fast-xml-parser": "^4.0.15"
+		"fast-xml-parser": "^4.0.15",
+		"hangul-js": "^0.2.6"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0",

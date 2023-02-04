@@ -2,6 +2,7 @@ import axios from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 import { API_KEY } from '$env/static/private'
 import type { RequestHandler } from './$types'
+import type { RouteRow, BusStopRow, Data } from '$@types/api'
 
 export const GET = (async () => {
 	const parser = new XMLParser()
@@ -12,7 +13,20 @@ export const GET = (async () => {
 	const [routeResult, busStopResult] = await Promise.all(
 		endpoints.map((endpoint) => axios.get(API_URL + endpoint, axiosConfig))
 	)
-	const res = { route: parser.parse(routeResult.data), busStop: parser.parse(busStopResult.data) }
+	const routeParsed = parser.parse(routeResult.data)
+	const busStopParsed = parser.parse(busStopResult.data)
 
-	return new Response(JSON.stringify(res))
+	const response: Data = {
+		routes: routeParsed.tableInfo.list.row.map((row: RouteRow) => ({
+			num: row.BRTNO,
+			id: row.BRTID,
+			name: row.BRTNAME
+		})),
+		busStops: busStopParsed.tableInfo.list.row.map((row: BusStopRow) => ({
+			id: row.STOPID,
+			name: row.STOPNAME
+		}))
+	}
+
+	return new Response(JSON.stringify(response))
 }) satisfies RequestHandler

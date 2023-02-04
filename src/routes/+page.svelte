@@ -1,20 +1,75 @@
 <script lang="ts">
+	import * as Hangul from 'hangul-js'
+	import type { Data, Route, BusStop } from '$@types/api'
+
+	let data: Data
+	let busResult: Route[] = []
+	let stopNameResult: BusStop[] = []
+	let stopIdResult: BusStop[] = []
+
 	const init = async () => {
-		const res = await fetch('/api/init')
-		const data = await res.json()
-		console.log(data)
-		return data
+		const localData = localStorage.getItem('data') || ''
+
+		if (localData.length > 0) {
+			console.log('[init] localData exists')
+			data = JSON.parse(localData)
+		} else {
+			console.log('[init] get data from api')
+			const res = await fetch('/api/init')
+			data = await res.json()
+			localStorage.setItem('data', JSON.stringify(data))
+		}
+	}
+
+	const debounce = (fn: Function, limit: number = 500) => {
+		let timeout: NodeJS.Timeout
+		return (...args: any[]) => {
+			clearTimeout(timeout)
+			timeout = setTimeout(() => fn(...args), limit)
+		}
+	}
+
+	const updateResult = (e: Event) => {
+		const target = e.target as HTMLInputElement
+		const query = target.value
+
+		busResult = []
+		stopNameResult = []
+		stopIdResult = []
+
+		if (query.length < 2) {
+			return
+		}
+
+		// search bus number
+		if (!isNaN(Number(query[0]))) {
+			busResult = data.routes.filter((r) => r.num.toString().startsWith(query))
+		}
+		// search stop name
+		const searcher = new Hangul.Searcher(query)
+		stopNameResult = data.busStops.filter((r) => searcher.search(r.name) >= 0)
+		// search stop id
+		if (!isNaN(Number(query[0]))) {
+			stopIdResult = data.busStops.filter((r) => r.id.toString().startsWith(query))
+		}
 	}
 </script>
 
 <main class="wrapper">
 	{#await init()}
 		<h1>Loading...</h1>
-	{:then data}
+	{:then}
 		<h1 class="title">울산버스</h1>
-		<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" />
-		<p>{data.route.tableInfo.totalCnt}</p>
-		<div class="result" />
+		<input
+			class="searchbox"
+			placeholder="노선번호, 정류장명, 정류장번호"
+			on:input={debounce(updateResult)}
+		/>
+		<div class="result">
+			<p>{busResult.length}</p>
+			<p>{stopNameResult.length}</p>
+			<p>{stopIdResult.length}</p>
+		</div>
 	{/await}
 </main>
 
