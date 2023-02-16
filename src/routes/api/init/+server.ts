@@ -18,12 +18,12 @@ export const GET = (async () => {
 
 	const response: Data = {
 		routes: routeParsed.tableInfo.list.row.map((row: RouteRow) => ({
-			num: row.BRTNO,
-			id: row.BRTID,
+			num: row.BRTNO.toString(),
+			id: row.BRTID.toString(),
 			name: row.BRTNAME
 		})),
 		busStops: busStopParsed.tableInfo.list.row.map((row: BusStopRow) => ({
-			id: row.STOPID,
+			id: row.STOPID.toString().slice(-5),
 			name: row.STOPNAME
 		}))
 	}

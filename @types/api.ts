@@ -10,13 +10,13 @@ export interface BusStopRow {
 }
 
 export interface Route {
-	num: number
-	id: number
+	num: string
+	id: string
 	name: string
 }
 
 export interface BusStop {
-	id: number
+	id: string
 	name: string
 }
 
