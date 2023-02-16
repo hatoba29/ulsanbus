@@ -5,8 +5,7 @@
 
 	let data: Data
 	let busResult: Route[] = []
-	let stopNameResult: BusStop[] = []
-	let stopIdResult: BusStop[] = []
+	let stopResult: BusStop[] = []
 
 	const init = async () => {
 		const localData = localStorage.getItem('data') || ''
@@ -35,8 +34,7 @@
 		const query = target.value
 
 		busResult = []
-		stopNameResult = []
-		stopIdResult = []
+		stopResult = []
 
 		if (query.length < 2) {
 			return
@@ -44,15 +42,11 @@
 
 		// search bus number
 		if (!isNaN(Number(query[0]))) {
-			busResult = data.routes.filter((r) => r.num.toString().startsWith(query))
+			busResult = data.routes.filter((r) => r.num.startsWith(query))
 		}
-		// search stop name
+		// search bus stop
 		const searcher = new Hangul.Searcher(query)
-		stopNameResult = data.busStops.filter((r) => searcher.search(r.name) >= 0)
-		// search stop id
-		if (!isNaN(Number(query[0]))) {
-			stopIdResult = data.busStops.filter((r) => r.id.toString().startsWith(query))
-		}
+		stopResult = data.busStops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
 	}
 </script>
 
@@ -74,17 +68,10 @@
 				{/each}
 			{/if}
 
-			{#if stopNameResult.length > 0}
-				<h2 class="subtitle">정류장명</h2>
-				{#each stopNameResult as item}
-					<p class="item">{item.name}</p>
-				{/each}
-			{/if}
-
-			{#if stopIdResult.length > 0}
-				<h2 class="subtitle">정류장번호</h2>
-				{#each stopIdResult as item}
-					<p class="item">{item.name}</p>
+			{#if stopResult.length > 0}
+				<h2 class="subtitle">정류장</h2>
+				{#each stopResult as item}
+					<p class="item">{item.name} ({item.id})</p>
 				{/each}
 			{/if}
 		</div>
