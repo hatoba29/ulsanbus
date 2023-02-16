@@ -67,9 +67,26 @@
 			on:input={debounce(updateResult)}
 		/>
 		<div class="result">
-			<p>{busResult.length}</p>
-			<p>{stopNameResult.length}</p>
-			<p>{stopIdResult.length}</p>
+			{#if busResult.length > 0}
+				<h2 class="subtitle">노선번호</h2>
+				{#each busResult as item}
+					<p class="item">{item.name}</p>
+				{/each}
+			{/if}
+
+			{#if stopNameResult.length > 0}
+				<h2 class="subtitle">정류장명</h2>
+				{#each stopNameResult as item}
+					<p class="item">{item.name}</p>
+				{/each}
+			{/if}
+
+			{#if stopIdResult.length > 0}
+				<h2 class="subtitle">정류장번호</h2>
+				{#each stopIdResult as item}
+					<p class="item">{item.name}</p>
+				{/each}
+			{/if}
 		</div>
 	{/await}
 </main>
@@ -110,5 +127,13 @@
 
 	.result {
 		flex-grow: 1;
+	}
+
+	.subtitle {
+		color: #98c379;
+	}
+
+	.item {
+		color: #d7dae0;
 	}
 </style>
