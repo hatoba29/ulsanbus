@@ -1,4 +1,5 @@
 <script lang="ts">
+	import axios from 'axios'
 	import * as Hangul from 'hangul-js'
 	import type { Data, Route, BusStop } from '$@types/api'
 
@@ -15,8 +16,8 @@
 			data = JSON.parse(localData)
 		} else {
 			console.log('[init] get data from api')
-			const res = await fetch('/api/init')
-			data = await res.json()
+			const res = await axios.get('/api/init')
+			data = res.data
 			localStorage.setItem('data', JSON.stringify(data))
 		}
 	}
