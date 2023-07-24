@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { XMLParser } from 'fast-xml-parser'
+import { json } from '@sveltejs/kit'
 import { API_KEY } from '$env/static/private'
 
 import type { RouteRow, BusStopRow, Data } from '@/types/api'
@@ -28,5 +29,5 @@ export const GET = async () => {
 		}))
 	}
 
-	return new Response(JSON.stringify(response))
+	return json(response)
 }
