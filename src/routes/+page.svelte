@@ -1,4 +1,5 @@
 <script lang="ts">
+	import _ from 'lodash'
 	import axios from 'axios'
 	import * as Hangul from 'hangul-js'
 
@@ -22,15 +23,7 @@
 		}
 	}
 
-	const debounce = (fn: Function, limit: number = 500) => {
-		let timeout: NodeJS.Timeout
-		return (...args: any[]) => {
-			clearTimeout(timeout)
-			timeout = setTimeout(() => fn(...args), limit)
-		}
-	}
-
-	const updateResult = (e: Event) => {
+	const updateResult = _.debounce((e: Event) => {
 		const target = e.target as HTMLInputElement
 		const query = target.value
 
@@ -48,7 +41,7 @@
 		// search bus stop
 		const searcher = new Hangul.Searcher(query)
 		stopResult = data.busStops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
-	}
+	}, 500)
 </script>
 
 <main class="wrapper">
@@ -56,11 +49,7 @@
 		<h1>Loading...</h1>
 	{:then}
 		<h1 class="title">울산버스</h1>
-		<input
-			class="searchbox"
-			placeholder="노선번호, 정류장명, 정류장번호"
-			on:input={debounce(updateResult)}
-		/>
+		<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" on:input={updateResult} />
 		<div class="result">
 			{#if busResult.length > 0}
 				<h2 class="subtitle">노선번호</h2>
