@@ -10,7 +10,7 @@
 	let stopResult: BusStop[] = []
 
 	const init = async () => {
-		const localData = localStorage.getItem('data') || ''
+		const localData = localStorage.getItem('data') ?? ''
 
 		if (localData.length > 0) {
 			console.log('[init] localData exists')
