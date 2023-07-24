@@ -53,15 +53,15 @@
 		<div class="result">
 			{#if busResult.length > 0}
 				<h2 class="subtitle">노선번호</h2>
-				{#each busResult as item}
-					<p class="item">{item.name}</p>
+				{#each busResult as bus}
+					<p class="item">{bus.name}</p>
 				{/each}
 			{/if}
 
 			{#if stopResult.length > 0}
 				<h2 class="subtitle">정류장</h2>
-				{#each stopResult as item}
-					<p class="item">{item.name} ({item.id})</p>
+				{#each stopResult as stop}
+					<p class="item">{stop.name} ({stop.id})</p>
 				{/each}
 			{/if}
 		</div>
