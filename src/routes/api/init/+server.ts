@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 import { API_KEY } from '$env/static/private'
+
 import type { RequestHandler } from './$types'
-import type { RouteRow, BusStopRow, Data } from '$@types/api'
+import type { RouteRow, BusStopRow, Data } from '@/types/api'
 
 export const GET = (async () => {
 	const parser = new XMLParser()

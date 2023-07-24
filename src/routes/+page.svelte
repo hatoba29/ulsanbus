@@ -1,7 +1,8 @@
 <script lang="ts">
 	import axios from 'axios'
 	import * as Hangul from 'hangul-js'
-	import type { Data, Route, BusStop } from '$@types/api'
+
+	import type { Data, Route, BusStop } from '@/types/api'
 
 	let data: Data
 	let busResult: Route[] = []
