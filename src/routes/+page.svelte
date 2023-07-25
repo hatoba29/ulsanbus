@@ -3,6 +3,7 @@
 	import axios from 'axios'
 	import * as Hangul from 'hangul-js'
 
+	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import type { Data, Route, BusStop } from '@/types/api'
 
 	let data: Data
@@ -46,7 +47,7 @@
 
 <main class="wrapper">
 	{#await init()}
-		<h1>Loading...</h1>
+		<LoadingOverlay />
 	{:then}
 		<h1 class="title">울산버스</h1>
 		<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" on:input={updateResult} />
