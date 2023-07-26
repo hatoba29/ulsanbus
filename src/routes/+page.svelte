@@ -84,7 +84,6 @@
 		padding: 12px 8px;
 		background-color: #0000;
 
-		color: color.$white;
 		font-size: 24px;
 		font-weight: bold;
 		text-align: center;
@@ -103,6 +102,5 @@
 	}
 
 	.item {
-		color: color.$white;
 	}
 </style>

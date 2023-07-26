@@ -25,7 +25,6 @@
 		span {
 			margin-top: 24px;
 
-			color: white;
 			font-size: 18px;
 			font-weight: bold;
 		}
