@@ -45,40 +45,29 @@
 	}, 500)
 </script>
 
-<main class="wrapper">
-	{#await init()}
-		<LoadingOverlay />
-	{:then}
-		<h1 class="title">울산버스</h1>
-		<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" on:input={updateResult} />
-		<div class="result">
-			{#if busResult.length > 0}
-				<h2 class="subtitle">노선번호</h2>
-				{#each busResult as bus}
-					<p class="item">{bus.name}</p>
-				{/each}
-			{/if}
+{#await init()}
+	<LoadingOverlay />
+{:then}
+	<h1 class="title">울산버스</h1>
+	<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" on:input={updateResult} />
+	<div class="result">
+		{#if busResult.length > 0}
+			<h2 class="subtitle">노선번호</h2>
+			{#each busResult as bus}
+				<p class="item">{bus.name}</p>
+			{/each}
+		{/if}
 
-			{#if stopResult.length > 0}
-				<h2 class="subtitle">정류장</h2>
-				{#each stopResult as stop}
-					<p class="item">{stop.name} ({stop.id})</p>
-				{/each}
-			{/if}
-		</div>
-	{/await}
-</main>
+		{#if stopResult.length > 0}
+			<h2 class="subtitle">정류장</h2>
+			{#each stopResult as stop}
+				<p class="item">{stop.name} ({stop.id})</p>
+			{/each}
+		{/if}
+	</div>
+{/await}
 
 <style lang="scss">
-	.wrapper {
-		height: 100%;
-		max-width: 480px;
-		margin: 0 auto;
-
-		display: flex;
-		flex-direction: column;
-	}
-
 	.title {
 		font-size: 32px;
 		text-align: center;

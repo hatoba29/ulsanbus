@@ -1,0 +1,12 @@
+<main><slot /></main>
+
+<style lang="scss">
+	main {
+		height: 100%;
+		max-width: 480px;
+		margin: 0 auto;
+
+		display: flex;
+		flex-direction: column;
+	}
+</style>
