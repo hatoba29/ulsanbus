@@ -68,21 +68,23 @@
 {/await}
 
 <style lang="scss">
+	@use '@/styles/color';
+
 	.title {
 		font-size: 32px;
 		text-align: center;
-		color: #61afef;
+		color: color.$blue;
 	}
 
 	.searchbox {
 		height: 52px;
 		width: 100%;
 		box-sizing: border-box;
-		border: 2px solid #d7dae0;
+		border: 2px solid color.$white;
 		padding: 12px 8px;
 		background-color: #0000;
 
-		color: #d7dae0;
+		color: color.$white;
 		font-size: 24px;
 		font-weight: bold;
 		text-align: center;
@@ -97,10 +99,10 @@
 	}
 
 	.subtitle {
-		color: #98c379;
+		color: color.$green;
 	}
 
 	.item {
-		color: #d7dae0;
+		color: color.$white;
 	}
 </style>
