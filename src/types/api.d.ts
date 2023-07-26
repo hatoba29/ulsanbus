@@ -9,6 +9,16 @@ export interface BusStopRow {
 	STOPNAME: string
 }
 
+export interface ArrivalRow {
+	VEHICLENO: number
+	PREVSTOPCNT: number
+	ARRIVALTIME: number
+	ROUTEID: number
+	REMARK: string
+	PRESENTSTOPNM: string
+	ROUTENM: string
+}
+
 export interface Route {
 	num: string
 	id: string
