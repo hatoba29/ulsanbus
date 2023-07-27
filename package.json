@@ -12,7 +12,10 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"dependencies": {
+		"@jamescoyle/svelte-icon": "^0.1.1",
+		"@mdi/js": "^7.2.96",
 		"axios": "^1.2.6",
+		"dayjs": "^1.11.9",
 		"fast-xml-parser": "^4.0.15",
 		"hangul-js": "^0.2.6",
 		"lodash": "^4.17.21"

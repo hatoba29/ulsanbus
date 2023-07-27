@@ -10,11 +10,10 @@ export interface BusStopRow {
 }
 
 export interface ArrivalRow {
-	VEHICLENO: number
+	VEHICLENO: string
 	PREVSTOPCNT: number
 	ARRIVALTIME: number
 	ROUTEID: number
-	REMARK: string
 	PRESENTSTOPNM: string
 	ROUTENM: string
 }
@@ -33,11 +32,10 @@ export interface BusStop {
 export interface Arrival {
 	id: number
 	name: string
-	direction: string
 	arrivalTime: number
 	stopCount: number
 	stopName: string
-	vehicleNumber: number
+	vehicleNumber: string
 }
 
 export interface Data {

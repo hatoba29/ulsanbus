@@ -8,11 +8,10 @@ export const GET = async ({ params }) => {
 	const response: Arrival[] = result.map((row) => ({
 		id: row.ROUTEID,
 		name: row.ROUTENM,
-		direction: row.REMARK,
 		arrivalTime: row.ARRIVALTIME,
 		stopCount: row.PREVSTOPCNT,
 		stopName: row.PRESENTSTOPNM,
-		vehicleNumber: row.VEHICLENO
+		vehicleNumber: row.VEHICLENO.slice(2)
 	}))
 
 	return json(response)
