@@ -30,6 +30,16 @@ export interface BusStop {
 	name: string
 }
 
+export interface Arrival {
+	id: number
+	name: string
+	direction: string
+	arrivalTime: number
+	stopCount: number
+	stopName: string
+	vehicleNumber: number
+}
+
 export interface Data {
 	routes: Route[]
 	busStops: BusStop[]

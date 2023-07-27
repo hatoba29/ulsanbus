@@ -1,9 +1,9 @@
 <script lang="ts">
 	import _ from 'lodash'
-	import axios from 'axios'
 	import * as Hangul from 'hangul-js'
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
+	import api from '@/tools/api'
 	import type { Data, Route, BusStop } from '@/types/api'
 
 	let data: Data
@@ -18,8 +18,7 @@
 			data = JSON.parse(localData)
 		} else {
 			console.log('[init] get data from api')
-			const res = await axios.get('/api/init')
-			data = res.data
+			data = await api.init()
 			localStorage.setItem('data', JSON.stringify(data))
 		}
 	}
