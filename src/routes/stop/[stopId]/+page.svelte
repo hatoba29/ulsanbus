@@ -40,11 +40,11 @@
 		{#each arrivals as arrival}
 			<div class="item">
 				<div class="item-left">
-					<span>{arrival.name}</span>
+					<span class="name">{arrival.name}</span>
 					<span>{arrival.vehicleNumber}</span>
 				</div>
 				<div class="item-right">
-					<span>{formatTime(arrival.arrivalTime)} 후 도착 예정</span>
+					<span class="arrival-time">{formatTime(arrival.arrivalTime)} 후 도착 예정</span>
 					<span>{formatCount(arrival.stopCount)}</span>
 					<span>({arrival.stopName})</span>
 				</div>
@@ -58,6 +58,7 @@
 
 	nav {
 		height: 64px;
+		margin-top: 8px;
 
 		display: flex;
 		align-items: center;
@@ -73,8 +74,15 @@
 		margin: 0;
 	}
 
+	.list-wrapper {
+		margin-top: 16px;
+		overflow: auto;
+	}
 	.item {
-		margin: 16px 0;
+		margin: 16px 8px;
+		border: 1px solid color.$white;
+		border-radius: 4px;
+		padding: 16px 8px;
 
 		display: flex;
 	}
@@ -89,5 +97,12 @@
 		flex-direction: column;
 
 		text-align: right;
+	}
+	.name,
+	.arrival-time {
+		margin-bottom: 8px;
+
+		font-size: 18px;
+		font-weight: bold;
 	}
 </style>
