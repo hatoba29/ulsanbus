@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation'
 	import SvgIcon from '@jamescoyle/svelte-icon'
 	import { mdiChevronLeft } from '@mdi/js'
 
@@ -14,6 +15,10 @@
 		return arrivals
 	}
 
+	const back = () => {
+		const ref = document.referrer
+		goto(ref.length > 0 ? ref : '/')
+	}
 	const formatTime = (seconds: number) => {
 		if (isNaN(seconds)) return '0'
 		if (seconds < 60) return '잠시'
@@ -31,8 +36,10 @@
 	<LoadingOverlay />
 {:then arrivals}
 	<nav>
-		<SvgIcon type="mdi" path={mdiChevronLeft} size={32} />
-		뒤로
+		<button class="back-button" on:click={back}>
+			<SvgIcon type="mdi" path={mdiChevronLeft} size={32} />
+			뒤로
+		</button>
 	</nav>
 	<h1 class="title">{$stop.name}</h1>
 	<h3 class="subtitle">{$stop.direction} ({data.id.slice(-5)})</h3>
@@ -59,9 +66,13 @@
 <style lang="scss">
 	@use '@/styles/color';
 
-	nav {
+	.back-button {
 		height: 64px;
 		margin-top: 8px;
+		border: none;
+		background-color: unset;
+
+		cursor: pointer;
 
 		display: flex;
 		align-items: center;
