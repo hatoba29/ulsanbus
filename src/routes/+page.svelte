@@ -60,7 +60,7 @@
 		{#if stopResult.length > 0}
 			<h2 class="subtitle">정류장</h2>
 			{#each stopResult as stop}
-				<p class="item">{stop.name} ({stop.id})</p>
+				<p class="item">{stop.name} ({stop.id.slice(-5)})</p>
 			{/each}
 		{/if}
 	</div>

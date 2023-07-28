@@ -16,7 +16,7 @@ export const GET = async () => {
 			name: row.BRTNAME
 		})),
 		busStops: busStopResult.map((row) => ({
-			id: row.STOPID.toString().slice(-5),
+			id: row.STOPID.toString(),
 			name: row.STOPNAME
 		}))
 	}
