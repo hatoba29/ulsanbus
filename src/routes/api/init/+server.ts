@@ -17,7 +17,8 @@ export const GET = async () => {
 		})),
 		busStops: busStopResult.map((row) => ({
 			id: row.STOPID.toString(),
-			name: row.STOPNAME
+			name: row.STOPNAME,
+			direction: row.STOPREMARK
 		}))
 	}
 

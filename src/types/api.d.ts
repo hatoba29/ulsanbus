@@ -7,6 +7,7 @@ export interface RouteRow {
 export interface BusStopRow {
 	STOPID: number
 	STOPNAME: string
+	STOPREMARK: string
 }
 
 export interface ArrivalRow {
@@ -27,6 +28,7 @@ export interface Route {
 export interface BusStop {
 	id: string
 	name: string
+	direction: string
 }
 
 export interface Arrival {

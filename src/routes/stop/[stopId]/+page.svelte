@@ -6,11 +6,20 @@
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import api from '@/tools/api'
 	import dayjs from '@/tools/dayjs'
-	import stop from '@/stores/stop'
+
+	interface State {
+		name: string
+		direction: string
+	}
 
 	export let data
 
+	let name = ''
+	let direction = ''
+
 	const init = async () => {
+		const state = history.state as State
+		;({ name, direction } = state)
 		const arrivals = await api.arrival(data.id)
 		return arrivals
 	}
@@ -41,8 +50,8 @@
 			뒤로
 		</button>
 	</nav>
-	<h1 class="title">{$stop.name}</h1>
-	<h3 class="subtitle">{$stop.direction} ({data.id.slice(-5)})</h3>
+	<h1 class="title">{name}</h1>
+	<h3 class="subtitle">{direction} ({data.id.slice(-5)})</h3>
 	<div class="list-wrapper">
 		{#each arrivals as arrival}
 			<div class="item">
@@ -78,6 +87,7 @@
 		align-items: center;
 
 		font-size: 20px;
+		font-weight: bold;
 	}
 
 	.title,
