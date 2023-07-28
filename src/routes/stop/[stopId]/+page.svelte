@@ -41,6 +41,9 @@
 			<div class="item">
 				<div class="item-left">
 					<span class="name">{arrival.name}</span>
+					{#if arrival.direction}
+						<span>{arrival.direction}</span>
+					{/if}
 					<span>{arrival.vehicleNumber}</span>
 				</div>
 				<div class="item-right">

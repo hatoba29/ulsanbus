@@ -32,6 +32,7 @@ export interface BusStop {
 export interface Arrival {
 	id: number
 	name: string
+	direction: string
 	arrivalTime: number
 	stopCount: number
 	stopName: string
