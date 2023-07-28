@@ -21,6 +21,10 @@
 		const minutes = dayjs.duration(seconds, 'seconds').asMinutes()
 		return `${Math.floor(minutes)}분`
 	}
+	const formatCount = (count: number) => {
+		if (count === 0) return '전 정류장 출발'
+		return `${count} 정류장 전`
+	}
 </script>
 
 {#await init()}
@@ -41,7 +45,7 @@
 				</div>
 				<div class="item-right">
 					<span>{formatTime(arrival.arrivalTime)} 후 도착 예정</span>
-					<span>{arrival.stopCount} 정류장 전</span>
+					<span>{formatCount(arrival.stopCount)}</span>
 					<span>({arrival.stopName})</span>
 				</div>
 			</div>
