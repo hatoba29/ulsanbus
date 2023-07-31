@@ -4,10 +4,14 @@ import apiUlsan from '@/tools/apiUlsan'
 import type { Data } from '@/types/api'
 
 const formatRouteName = (name: string, c: number) => {
-	const [num, direction] = name.split(/\(|\)/)
+	const [num] = name.split('(')
+	const direction = name.match(/\((.*)\)/)?.[1]
 
-	if (c === 0) return `${num} (${direction})`
-	return `${num}(지원 ${c}) (${direction})`
+	let result = num
+	if (c !== 0) result += `(지원 ${c})`
+	if (direction) result += ` (${direction})`
+
+	return result
 }
 
 export const GET = async () => {
