@@ -2,6 +2,8 @@ export interface RouteRow {
 	BRTNO: number
 	BRTID: number
 	BRTNAME: string
+	CLASS: number
+	DIRECTION: number
 }
 
 export interface BusStopRow {
@@ -23,6 +25,8 @@ export interface Route {
 	num: string
 	id: string
 	name: string
+	direction: number
+	class: number
 }
 
 export interface BusStop {
