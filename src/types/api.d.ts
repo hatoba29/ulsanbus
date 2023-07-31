@@ -25,7 +25,8 @@ export interface Route {
 	num: string
 	id: string
 	name: string
-	direction: number
+	direction?: string
+	directionNum: number
 	class: number
 }
 

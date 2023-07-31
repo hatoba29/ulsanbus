@@ -5,13 +5,9 @@ import type { Data } from '@/types/api'
 
 const formatRouteName = (name: string, c: number) => {
 	const [num] = name.split('(')
-	const direction = name.match(/\((.*)\)/)?.[1]
 
-	let result = num
-	if (c !== 0) result += `(지원 ${c})`
-	if (direction) result += ` (${direction})`
-
-	return result
+	if (c === 0) return num
+	return num + `(지원 ${c})`
 }
 
 export const GET = async () => {
@@ -25,7 +21,8 @@ export const GET = async () => {
 			num: row.BRTNO.toString(),
 			id: row.BRTID.toString(),
 			name: formatRouteName(row.BRTNAME, row.CLASS),
-			direction: row.DIRECTION,
+			direction: row.BRTNAME.match(/\((.*)\)/)?.[1],
+			directionNum: row.DIRECTION,
 			class: row.CLASS
 		})),
 		busStops: busStopResult.map((row) => ({
