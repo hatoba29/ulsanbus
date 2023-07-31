@@ -1,9 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation'
-	import SvgIcon from '@jamescoyle/svelte-icon'
-	import { mdiChevronLeft } from '@mdi/js'
-
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
+	import Navigation from '@/components/Navigation.svelte'
 	import api from '@/tools/api'
 	import dayjs from '@/tools/dayjs'
 
@@ -24,10 +21,6 @@
 		return arrivals
 	}
 
-	const back = () => {
-		const ref = document.referrer
-		goto(ref.length > 0 ? ref : '/')
-	}
 	const formatTime = (seconds: number) => {
 		if (isNaN(seconds)) return '0'
 		if (seconds < 60) return '잠시'
@@ -44,12 +37,7 @@
 {#await init()}
 	<LoadingOverlay />
 {:then arrivals}
-	<nav>
-		<button class="back-button" on:click={back}>
-			<SvgIcon type="mdi" path={mdiChevronLeft} size={32} />
-			뒤로
-		</button>
-	</nav>
+	<Navigation />
 	<h1 class="title">{name}</h1>
 	<h3 class="subtitle">{direction} ({data.id.slice(-5)})</h3>
 	<div class="list-wrapper">
@@ -74,21 +62,6 @@
 
 <style lang="scss">
 	@use '@/styles/color';
-
-	.back-button {
-		height: 64px;
-		margin-top: 8px;
-		border: none;
-		background-color: unset;
-
-		cursor: pointer;
-
-		display: flex;
-		align-items: center;
-
-		font-size: 20px;
-		font-weight: bold;
-	}
 
 	.title,
 	.subtitle {
