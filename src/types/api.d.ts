@@ -27,7 +27,7 @@ export interface Route {
 	name: string
 	direction?: string
 	directionNum: number
-	class: number
+	classNum: number
 }
 
 export interface BusStop {

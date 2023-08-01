@@ -23,7 +23,7 @@ export const GET = async () => {
 			name: formatRouteName(row.BRTNAME, row.CLASS),
 			direction: row.BRTNAME.match(/\((.*)\)/)?.[1],
 			directionNum: row.DIRECTION,
-			class: row.CLASS
+			classNum: row.CLASS
 		})),
 		busStops: busStopResult.map((row) => ({
 			id: row.STOPID.toString(),
