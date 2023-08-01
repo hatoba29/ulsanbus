@@ -44,6 +44,15 @@
 		stopResult = data.busStops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
 	}, 500)
 
+	const openBusInfo = (bus: Route) => {
+		const state = {
+			name: bus.name,
+			direction: bus.direction,
+			directionNum: bus.directionNum,
+			classNum: bus.classNum
+		}
+		goto(`/bus/${bus.id}`, { state })
+	}
 	const openArrivalInfo = (stop: BusStop) => {
 		goto(`/stop/${stop.id}`, { state: { name: stop.name, direction: stop.direction } })
 	}
@@ -58,7 +67,9 @@
 		{#if busResult.length > 0}
 			<h2 class="subtitle">노선번호</h2>
 			{#each busResult as bus}
-				<button class="item">{bus.name}</button>
+				<button class="item" on:click={() => openBusInfo(bus)}>
+					{bus.name} ({bus.direction})
+				</button>
 			{/each}
 		{/if}
 

@@ -1,16 +1,32 @@
 <script lang="ts">
 	import Navigation from '@/components/Navigation.svelte'
+	import { onMount } from 'svelte'
 
+	interface State {
+		name: string
+		direction?: string
+		directionNum: number
+		classNum: number
+	}
 	type Tabs = 'timetable' | 'route'
 
-	let name = '733' // dummy data while developing
-	let direction = '덕하공영차고지(종점) 방면' // dummy data while developing
+	let name: string
+	let direction: string | undefined
+	let directionNum: number
+	let classNum: number
 	let tab: Tabs = 'timetable'
+
+	onMount(() => {
+		const state = history.state as State
+		;({ name, direction, directionNum, classNum } = state)
+	})
 </script>
 
 <Navigation />
 <h1 class="title">{name}</h1>
-<h3 class="subtitle">{direction}</h3>
+{#if direction}
+	<h3 class="subtitle">{direction}</h3>
+{/if}
 
 <div class="tabs">
 	<button class="tab" class:selected={tab === 'timetable'} on:click={() => (tab = 'timetable')}>
