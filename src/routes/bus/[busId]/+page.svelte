@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Navigation from '@/components/Navigation.svelte'
+	import TimetableInfo from '@/components/TimetableInfo.svelte'
 	import { onMount } from 'svelte'
 
 	interface State {
@@ -9,6 +10,8 @@
 		classNum: number
 	}
 	type Tabs = 'timetable' | 'route'
+
+	export let data
 
 	let name: string
 	let direction: string | undefined
@@ -37,6 +40,14 @@
 	</button>
 </div>
 
+<div class="list-wrapper">
+	{#if tab === 'timetable'}
+		<TimetableInfo id={data.id} {directionNum} {classNum} />
+	{:else}
+		<div>TODO</div>
+	{/if}
+</div>
+
 <style lang="scss">
 	@use '@/styles/color';
 
@@ -51,6 +62,7 @@
 	.tabs {
 		display: flex;
 		height: 64px;
+		min-height: 64px;
 		margin-top: 8px;
 	}
 	.tab {
@@ -70,5 +82,11 @@
 			border-bottom-width: 4px;
 			padding-bottom: 0;
 		}
+	}
+
+	.list-wrapper {
+		/* height: 100%; */
+		margin-top: 16px;
+		overflow: auto;
 	}
 </style>

@@ -13,8 +13,10 @@ const api = {
 		const { data } = await apiAxios.get<Arrival[]>(`/arrival/${stopId}`)
 		return data
 	},
-	timetable: async (busId: string) => {
-		const { data } = await apiAxios.get<Timetable[]>(`/bus/${busId}/timetable`)
+	timetable: async (busId: string, dayOfWeek: number) => {
+		const { data } = await apiAxios.get<Timetable[]>(`/bus/${busId}/timetable`, {
+			params: { dayOfWeek }
+		})
 		return data
 	}
 }
