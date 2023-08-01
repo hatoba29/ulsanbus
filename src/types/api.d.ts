@@ -21,6 +21,12 @@ export interface ArrivalRow {
 	ROUTENM: string
 }
 
+export interface TimetableRow {
+	DIRECTION: number
+	TIME: string
+	CLASS: number
+}
+
 export interface Route {
 	num: string
 	id: string
@@ -44,6 +50,12 @@ export interface Arrival {
 	stopCount: number
 	stopName: string
 	vehicleNumber: string
+}
+
+export interface Timetable {
+	time: { hour: string; minute: string }
+	direction: number
+	classNum: number
 }
 
 export interface Data {

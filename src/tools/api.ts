@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import type { Arrival, Data } from '@/types/api'
+import type { Data, Arrival, Timetable } from '@/types/api'
 
 const apiAxios = axios.create({ baseURL: '/api' })
 
@@ -11,6 +11,10 @@ const api = {
 	},
 	arrival: async (stopId: string) => {
 		const { data } = await apiAxios.get<Arrival[]>(`/arrival/${stopId}`)
+		return data
+	},
+	timetable: async (busId: string) => {
+		const { data } = await apiAxios.get<Timetable[]>(`/bus/${busId}/timetable`)
 		return data
 	}
 }

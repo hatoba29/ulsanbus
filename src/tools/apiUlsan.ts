@@ -2,7 +2,7 @@ import axios from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 import { API_KEY } from '$env/static/private'
 
-import type { RouteRow, BusStopRow, ArrivalRow } from '@/types/api'
+import type { RouteRow, BusStopRow, ArrivalRow, TimetableRow } from '@/types/api'
 
 const xmlParser = new XMLParser()
 const apiAxios = axios.create({
@@ -26,6 +26,10 @@ const apiUlsan = {
 	arrivalInfo: async (id: string) => {
 		const { data } = await apiAxios.get('/getBusArrivalInfo.xo', { params: { stopid: id } })
 		return parse(data) as ArrivalRow[]
+	},
+	timetable: async (routeNo: string, dayOfWeek: string) => {
+		const { data } = await apiAxios.get('/BusTimetable.xo', { params: { routeNo, dayOfWeek } })
+		return parse(data) as TimetableRow[]
 	}
 }
 
