@@ -85,8 +85,7 @@
 	}
 
 	.list-wrapper {
-		/* height: 100%; */
-		margin-top: 16px;
+		margin: 16px 0;
 		overflow: auto;
 	}
 </style>

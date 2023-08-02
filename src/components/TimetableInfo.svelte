@@ -33,11 +33,35 @@
 	<LoadingOverlay />
 {:then timetable}
 	{#each hours as hour}
-		<h3>{hour}</h3>
-		{#each timetable[hour] as row}
-			<span>{row.time.minute}</span>
-		{/each}
+		<div class="timetable-row">
+			<h3 class="hour">{hour}</h3>
+			<div>
+				{#each timetable[hour] as row}
+					<span class="minute">{row.time.minute}</span>
+				{/each}
+			</div>
+		</div>
 	{/each}
 {/await}
 
-<style lang="scss"></style>
+<style lang="scss">
+	.timetable-row {
+		display: flex;
+		border-bottom: 1px solid white;
+
+		&:last-of-type {
+			border: none;
+		}
+	}
+	.hour {
+		margin: 0;
+		border-right: 1px solid white;
+		padding: 16px;
+
+		text-align: center;
+	}
+	.minute {
+		display: inline-block;
+		margin: 8px;
+	}
+</style>
