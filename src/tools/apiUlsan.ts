@@ -2,7 +2,7 @@ import axios from 'axios'
 import { XMLParser } from 'fast-xml-parser'
 import { API_KEY } from '$env/static/private'
 
-import type { RouteRow, BusStopRow, ArrivalRow, TimetableRow } from '@/types/api'
+import type { BusRow, StopRow, ArrivalRow, TimetableRow } from '@/types/api'
 
 const xmlParser = new XMLParser()
 const apiAxios = axios.create({
@@ -15,15 +15,15 @@ const parse = (data: string) => {
 }
 
 const apiUlsan = {
-	routeInfo: async () => {
+	allBuses: async () => {
 		const { data } = await apiAxios.get('/RouteInfo.xo')
-		return parse(data) as RouteRow[]
+		return parse(data) as BusRow[]
 	},
-	busStopInfo: async () => {
+	allStops: async () => {
 		const { data } = await apiAxios.get('/BusStopInfo.xo')
-		return parse(data) as BusStopRow[]
+		return parse(data) as StopRow[]
 	},
-	arrivalInfo: async (id: string) => {
+	arrivals: async (id: string) => {
 		const { data } = await apiAxios.get('/getBusArrivalInfo.xo', { params: { stopid: id } })
 		return parse(data) as ArrivalRow[]
 	},

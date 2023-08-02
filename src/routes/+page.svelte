@@ -5,11 +5,11 @@
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import api from '@/tools/api'
-	import type { Data, Route, BusStop } from '@/types/api'
+	import type { Data, Bus, Stop } from '@/types/api'
 
 	let data: Data
-	let busResult: Route[] = []
-	let stopResult: BusStop[] = []
+	let busResult: Bus[] = []
+	let stopResult: Stop[] = []
 
 	const init = async () => {
 		const localData = localStorage.getItem('data') ?? ''
@@ -37,14 +37,14 @@
 
 		// search bus number
 		if (!isNaN(Number(query[0]))) {
-			busResult = data.routes.filter((r) => r.num.startsWith(query))
+			busResult = data.buses.filter((r) => r.num.startsWith(query))
 		}
 		// search bus stop
 		const searcher = new Hangul.Searcher(query)
-		stopResult = data.busStops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
+		stopResult = data.stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
 	}, 500)
 
-	const openBusInfo = (bus: Route) => {
+	const openBusInfo = (bus: Bus) => {
 		const state = {
 			name: bus.name,
 			direction: bus.direction,
@@ -53,7 +53,7 @@
 		}
 		goto(`/bus/${bus.id}`, { state })
 	}
-	const openArrivalInfo = (stop: BusStop) => {
+	const openArrivalInfo = (stop: Stop) => {
 		goto(`/stop/${stop.id}`, { state: { name: stop.name, direction: stop.direction } })
 	}
 </script>

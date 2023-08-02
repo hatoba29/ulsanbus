@@ -17,7 +17,7 @@
 	const init = async () => {
 		const state = history.state as State
 		;({ name, direction } = state)
-		const arrivals = await api.arrival(data.id)
+		const arrivals = await api.arrivals(data.id)
 		return arrivals
 	}
 

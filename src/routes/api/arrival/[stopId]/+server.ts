@@ -4,8 +4,8 @@ import apiUlsan from '@/tools/apiUlsan'
 import type { Arrival } from '@/types/api'
 
 export const GET = async ({ params }) => {
-	const result = await apiUlsan.arrivalInfo(params.stopId)
-	const response: Arrival[] = result.map((row) => {
+	const arrivals = await apiUlsan.arrivals(params.stopId)
+	const response: Arrival[] = arrivals.map((row) => {
 		const [name] = row.ROUTENM.toString().split('(')
 		const direction = row.ROUTENM.toString().match(/\((.*)\)/)?.[1]
 

@@ -9,7 +9,7 @@ const api = {
 		const { data } = await apiAxios.get<Data>('/init')
 		return data
 	},
-	arrival: async (stopId: string) => {
+	arrivals: async (stopId: string) => {
 		const { data } = await apiAxios.get<Arrival[]>(`/arrival/${stopId}`)
 		return data
 	},

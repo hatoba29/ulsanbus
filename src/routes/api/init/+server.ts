@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit'
 import apiUlsan from '@/tools/apiUlsan'
 import type { Data } from '@/types/api'
 
-const formatRouteName = (name: string, c: number) => {
+const formatBusName = (name: string, c: number) => {
 	const [num] = name.split('(')
 
 	if (c === 0) return num
@@ -11,21 +11,18 @@ const formatRouteName = (name: string, c: number) => {
 }
 
 export const GET = async () => {
-	const [routeResult, busStopResult] = await Promise.all([
-		apiUlsan.routeInfo(),
-		apiUlsan.busStopInfo()
-	])
+	const [allBuses, allStops] = await Promise.all([apiUlsan.allBuses(), apiUlsan.allStops()])
 
 	const response: Data = {
-		routes: routeResult.map((row) => ({
+		buses: allBuses.map((row) => ({
 			num: row.BRTNO.toString(),
 			id: row.BRTID.toString(),
-			name: formatRouteName(row.BRTNAME, row.CLASS),
+			name: formatBusName(row.BRTNAME, row.CLASS),
 			direction: row.BRTNAME.match(/\((.*)\)/)?.[1],
 			directionNum: row.DIRECTION,
 			classNum: row.CLASS
 		})),
-		busStops: busStopResult.map((row) => ({
+		stops: allStops.map((row) => ({
 			id: row.STOPID.toString(),
 			name: row.STOPNAME,
 			direction: row.STOPREMARK

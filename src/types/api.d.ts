@@ -1,4 +1,4 @@
-export interface RouteRow {
+export interface BusRow {
 	BRTNO: number
 	BRTID: number
 	BRTNAME: string
@@ -6,7 +6,7 @@ export interface RouteRow {
 	DIRECTION: number
 }
 
-export interface BusStopRow {
+export interface StopRow {
 	STOPID: number
 	STOPNAME: string
 	STOPREMARK: string
@@ -27,7 +27,7 @@ export interface TimetableRow {
 	CLASS: number
 }
 
-export interface Route {
+export interface Bus {
 	num: string
 	id: string
 	name: string
@@ -36,7 +36,7 @@ export interface Route {
 	classNum: number
 }
 
-export interface BusStop {
+export interface Stop {
 	id: string
 	name: string
 	direction: string
@@ -59,6 +59,6 @@ export interface Timetable {
 }
 
 export interface Data {
-	routes: Route[]
-	busStops: BusStop[]
+	buses: Bus[]
+	stops: Stop[]
 }
