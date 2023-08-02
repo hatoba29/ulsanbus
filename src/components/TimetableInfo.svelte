@@ -80,6 +80,8 @@
 {/await}
 
 <style lang="scss">
+	@use '@/styles/color';
+
 	.options {
 		display: flex;
 		margin-bottom: 16px;
@@ -90,7 +92,7 @@
 
 	.timetable-row {
 		display: flex;
-		border-bottom: 1px solid white;
+		border-bottom: 1px solid color.$white;
 
 		&:last-of-type {
 			border: none;
@@ -98,7 +100,7 @@
 	}
 	.hour {
 		margin: 0;
-		border-right: 1px solid white;
+		border-right: 1px solid color.$white;
 		padding: 16px;
 
 		text-align: center;
