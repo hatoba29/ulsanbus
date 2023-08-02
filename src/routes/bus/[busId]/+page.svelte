@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Navigation from '@/components/Navigation.svelte'
+	import RouteInfo from '@/components/RouteInfo.svelte'
 	import TimetableInfo from '@/components/TimetableInfo.svelte'
 	import { onMount } from 'svelte'
 
@@ -44,7 +45,7 @@
 	{#if tab === 'timetable'}
 		<TimetableInfo id={data.id} {directionNum} {classNum} />
 	{:else}
-		<div>TODO</div>
+		<RouteInfo id={data.id} />
 	{/if}
 </div>
 

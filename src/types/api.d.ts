@@ -12,6 +12,11 @@ export interface StopRow {
 	STOPREMARK: string
 }
 
+export interface RouteRow {
+	STOPID: number
+	STOPNM: string
+}
+
 export interface ArrivalRow {
 	VEHICLENO: string
 	PREVSTOPCNT: number
@@ -56,6 +61,11 @@ export interface Timetable {
 	time: { hour: string; minute: string }
 	direction: number
 	classNum: number
+}
+
+export interface Route {
+	id: string
+	name: string
 }
 
 export interface Data {
