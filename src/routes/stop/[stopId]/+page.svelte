@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation'
+
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import Navigation from '@/components/Navigation.svelte'
 	import api from '@/tools/api'
@@ -15,6 +17,10 @@
 	let direction = ''
 
 	const init = async () => {
+		if (!history.state.name) {
+			window.alert('메인 페이지를 통해서 접근해주세요.')
+			goto('/')
+		}
 		const state = history.state as State
 		;({ name, direction } = state)
 		const arrivals = await api.arrivals(data.id)
