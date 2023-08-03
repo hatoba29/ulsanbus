@@ -10,6 +10,23 @@
 	let data: Data
 	let busResult: Bus[] = []
 	let stopResult: Stop[] = []
+	let query: string
+
+	const restoreResult = () => {
+		const sessionQuery = sessionStorage.getItem('query')
+		const sessionBusResult = sessionStorage.getItem('busResult')
+		const sessionStopResult = sessionStorage.getItem('stopResult')
+
+		if (sessionQuery) {
+			query = sessionQuery
+		}
+		if (sessionBusResult) {
+			busResult = JSON.parse(sessionBusResult)
+		}
+		if (sessionStopResult) {
+			stopResult = JSON.parse(sessionStopResult)
+		}
+	}
 
 	const init = async () => {
 		const localData = localStorage.getItem('data') ?? ''
@@ -17,6 +34,7 @@
 		if (localData.length > 0) {
 			console.log('[init] localData exists')
 			data = JSON.parse(localData)
+			restoreResult()
 		} else {
 			console.log('[init] get data from api')
 			data = await api.init()
@@ -24,10 +42,7 @@
 		}
 	}
 
-	const updateResult = _.debounce((e: Event) => {
-		const target = e.target as HTMLInputElement
-		const query = target.value
-
+	const updateResult = _.debounce(() => {
 		busResult = []
 		stopResult = []
 
@@ -42,6 +57,10 @@
 		// search bus stop
 		const searcher = new Hangul.Searcher(query)
 		stopResult = data.stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
+
+		sessionStorage.setItem('query', query)
+		sessionStorage.setItem('busResult', JSON.stringify(busResult))
+		sessionStorage.setItem('stopResult', JSON.stringify(stopResult))
 	}, 500)
 
 	const openBusInfo = (bus: Bus) => {
@@ -62,7 +81,12 @@
 	<LoadingOverlay />
 {:then}
 	<h1 class="title">울산버스</h1>
-	<input class="searchbox" placeholder="노선번호, 정류장명, 정류장번호" on:input={updateResult} />
+	<input
+		class="searchbox"
+		placeholder="노선번호, 정류장명, 정류장번호"
+		bind:value={query}
+		on:input={updateResult}
+	/>
 	<div class="result">
 		{#if busResult.length > 0}
 			<h2 class="subtitle">노선번호</h2>
