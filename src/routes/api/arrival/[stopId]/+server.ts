@@ -10,7 +10,7 @@ export const GET = async ({ params }) => {
 		const direction = row.ROUTENM.toString().match(/\((.*)\)/)?.[1]
 
 		return {
-			id: row.ROUTEID,
+			id: row.ROUTEID.toString(),
 			name,
 			direction,
 			arrivalTime: row.ARRIVALTIME,

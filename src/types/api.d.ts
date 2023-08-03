@@ -48,7 +48,7 @@ export interface Stop {
 }
 
 export interface Arrival {
-	id: number
+	id: string
 	name: string
 	direction?: string
 	arrivalTime: number
