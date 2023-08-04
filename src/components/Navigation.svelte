@@ -1,34 +1,70 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte'
 	import { goto } from '$app/navigation'
 	import SvgIcon from '@jamescoyle/svelte-icon'
-	import { mdiChevronLeft } from '@mdi/js'
+	import { mdiChevronLeft, mdiStar, mdiStarOutline } from '@mdi/js'
+
+	export let favorite: boolean
+
+	const dispatch = createEventDispatcher<{ toggle: null }>()
 
 	const back = () => {
 		const ref = document.referrer
 		goto(ref.length > 0 ? ref : '/')
 	}
+	const toggleFavorite = () => {
+		dispatch('toggle')
+	}
 </script>
 
-<nav>
+<nav class="wrapper">
 	<button class="back-button" on:click={back}>
 		<SvgIcon type="mdi" path={mdiChevronLeft} size={32} />
 		뒤로
 	</button>
+	<button class="star-button" on:click={toggleFavorite}>
+		{#if favorite}
+			<SvgIcon type="mdi" path={mdiStar} size={32} />
+		{:else}
+			<SvgIcon type="mdi" path={mdiStarOutline} size={32} />
+		{/if}
+	</button>
 </nav>
 
 <style lang="scss">
-	.back-button {
-		height: 64px;
-		margin-top: 8px;
-		border: none;
-		background-color: unset;
+	@use '@/styles/color';
 
-		cursor: pointer;
+	%button {
+		border: none;
+		padding: 0;
+		background-color: unset;
 
 		display: flex;
 		align-items: center;
 
+		cursor: pointer;
+	}
+
+	.wrapper {
+		margin-top: 8px;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.back-button {
+		@extend %button;
+
+		height: 64px;
+
 		font-size: 20px;
 		font-weight: bold;
+	}
+	.star-button {
+		@extend %button;
+
+		:global(path) {
+			color: color.$yellow;
+		}
 	}
 </style>

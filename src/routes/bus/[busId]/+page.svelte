@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
 	import { goto } from '$app/navigation'
 
 	import Navigation from '@/components/Navigation.svelte'
 	import RouteInfo from '@/components/RouteInfo.svelte'
 	import TimetableInfo from '@/components/TimetableInfo.svelte'
-	import { onMount } from 'svelte'
+	import { busFavorites } from '@/stores/favorites'
 
 	interface State {
 		name: string
@@ -20,7 +21,9 @@
 	let direction: string | undefined
 	let directionNum: number
 	let classNum: number
+
 	let tab: Tabs = 'timetable'
+	let favorite: boolean = busFavorites.has(data.id)
 
 	onMount(() => {
 		if (!history.state.name) {
@@ -30,9 +33,18 @@
 		const state = history.state as State
 		;({ name, direction, directionNum, classNum } = state)
 	})
+
+	const toggleFavorite = () => {
+		if (favorite) {
+			busFavorites.remove(data.id)
+		} else {
+			busFavorites.add({ id: data.id, name, direction, directionNum, classNum })
+		}
+		favorite = !favorite
+	}
 </script>
 
-<Navigation />
+<Navigation {favorite} on:toggle={toggleFavorite} />
 <h1 class="title">{name}</h1>
 {#if direction}
 	<h3 class="subtitle">{direction}</h3>
