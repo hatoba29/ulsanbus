@@ -107,13 +107,19 @@
 			{#each $favorites.buses as bus}
 				<button class="item" on:click={() => openBusInfo(bus)}>
 					<SvgIcon type="mdi" path={mdiBus} size={32} />
-					{bus.name} ({bus.direction})
+					<div>
+						<div>{bus.name}</div>
+						<div class="item-subtitle">{bus.direction}</div>
+					</div>
 				</button>
 			{/each}
 			{#each $favorites.stops as stop}
 				<button class="item" on:click={() => openArrivalInfo(stop)}>
 					<SvgIcon type="mdi" path={mdiMapMarker} size={32} />
-					{stop.name} ({stop.direction} / {stop.id.slice(-5)})
+					<div>
+						<div>{stop.name} ({stop.id.slice(-5)})</div>
+						<div class="item-subtitle">{stop.direction}</div>
+					</div>
 				</button>
 			{/each}
 		{/if}
@@ -122,7 +128,11 @@
 			<h2 class="subtitle">노선번호</h2>
 			{#each busResult as bus}
 				<button class="item" on:click={() => openBusInfo(bus)}>
-					{bus.name} ({bus.direction})
+					<SvgIcon type="mdi" path={mdiBus} size={32} />
+					<div>
+						<div>{bus.name}</div>
+						<div class="item-subtitle">{bus.direction}</div>
+					</div>
 				</button>
 			{/each}
 		{/if}
@@ -131,7 +141,11 @@
 			<h2 class="subtitle">정류장</h2>
 			{#each stopResult as stop}
 				<button class="item" on:click={() => openArrivalInfo(stop)}>
-					{stop.name} ({stop.direction} / {stop.id.slice(-5)})
+					<SvgIcon type="mdi" path={mdiMapMarker} size={32} />
+					<div>
+						<div>{stop.name} ({stop.id.slice(-5)})</div>
+						<div class="item-subtitle">{stop.direction}</div>
+					</div>
 				</button>
 			{/each}
 		{/if}
@@ -187,14 +201,31 @@
 		margin: 16px 0;
 		border: 1px solid color.$white;
 		border-radius: 4px;
-		padding: 16px 8px;
+		padding: 14px 8px;
 		background-color: unset;
 
 		align-items: center;
-		justify-content: center;
+		gap: 4px;
 
 		font-size: 18px;
+		font-weight: bold;
+		text-align: left;
+		word-break: keep-all;
 
 		cursor: pointer;
+
+		.item-subtitle {
+			margin-top: 4px;
+			font-size: 16px;
+			color: color.$blue;
+			font-weight: normal;
+		}
+
+		:global(svg) {
+			flex-shrink: 0;
+		}
+		:global(path) {
+			color: color.$green;
+		}
 	}
 </style>
