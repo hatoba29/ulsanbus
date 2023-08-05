@@ -163,6 +163,9 @@
 		text-align: center;
 
 		&::placeholder {
+			position: relative;
+			top: -4px;
+
 			font-size: 16px;
 		}
 	}
