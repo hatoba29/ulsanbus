@@ -5,6 +5,7 @@
 	import Navigation from '@/components/Navigation.svelte'
 	import api from '@/tools/api'
 	import dayjs from '@/tools/dayjs'
+	import { stopFavorites } from '@/stores/favorites'
 
 	interface State {
 		name: string
@@ -15,6 +16,7 @@
 
 	let name = ''
 	let direction = ''
+	let favorite: boolean = stopFavorites.has(data.id)
 
 	const init = async () => {
 		if (!history.state.name) {
@@ -27,6 +29,14 @@
 		return arrivals
 	}
 
+	const toggleFavorite = () => {
+		if (favorite) {
+			stopFavorites.remove(data.id)
+		} else {
+			stopFavorites.add({ id: data.id, name, direction })
+		}
+		favorite = !favorite
+	}
 	const formatTime = (seconds: number) => {
 		if (isNaN(seconds)) return '0'
 		if (seconds < 60) return '잠시'
@@ -43,7 +53,7 @@
 {#await init()}
 	<LoadingOverlay />
 {:then arrivals}
-	<Navigation />
+	<Navigation {favorite} on:toggle={toggleFavorite} />
 	<h1 class="title">{name}</h1>
 	<h3 class="subtitle">{direction} ({data.id.slice(-5)})</h3>
 	<div class="list-wrapper">
