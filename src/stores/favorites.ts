@@ -23,10 +23,9 @@ interface Favorites {
 export const favorites = writable<Favorites>({ buses: [], stops: [] })
 if (browser) {
 	favorites.update((s) => {
-		const localData = JSON.parse(localStorage.getItem('favorites') ?? '')
-		if (localData) {
-			s.buses = localData.buses
-			s.stops = localData.stops
+		const localData = JSON.parse(localStorage.getItem('favorites') ?? '{}')
+		if (!_.isEmpty(localData)) {
+			_.assign(s, localData)
 		}
 
 		return s
