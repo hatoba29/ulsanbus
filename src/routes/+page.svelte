@@ -1,11 +1,14 @@
 <script lang="ts">
 	import _ from 'lodash'
 	import * as Hangul from 'hangul-js'
+	import SvgIcon from '@jamescoyle/svelte-icon'
+	import { mdiBus, mdiMapMarker } from '@mdi/js'
 	import { goto } from '$app/navigation'
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import api from '@/tools/api'
 	import type { Data, Bus, Stop } from '@/types/api'
+	import { favorites } from '@/stores/favorites'
 
 	let data: Data
 	let busResult: Bus[] = []
@@ -42,26 +45,37 @@
 		}
 	}
 
-	const updateResult = _.debounce(() => {
-		busResult = []
-		stopResult = []
-
+	const updateResult = () => {
 		if (query.length < 2) {
-			return
+			busResult = []
+			stopResult = []
+
+			sessionStorage.setItem('query', '')
+			sessionStorage.setItem('busResult', '')
+			sessionStorage.setItem('stopResult', '')
 		}
 
-		// search bus number
-		if (!isNaN(Number(query[0]))) {
-			busResult = data.buses.filter((r) => r.num.startsWith(query))
-		}
-		// search bus stop
-		const searcher = new Hangul.Searcher(query)
-		stopResult = data.stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
+		_.debounce(() => {
+			if (query.length < 2) {
+				return
+			}
 
-		sessionStorage.setItem('query', query)
-		sessionStorage.setItem('busResult', JSON.stringify(busResult))
-		sessionStorage.setItem('stopResult', JSON.stringify(stopResult))
-	}, 500)
+			busResult = []
+			stopResult = []
+
+			// search bus number
+			if (!isNaN(Number(query[0]))) {
+				busResult = data.buses.filter((r) => r.num.startsWith(query))
+			}
+			// search bus stop
+			const searcher = new Hangul.Searcher(query)
+			stopResult = data.stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
+
+			sessionStorage.setItem('query', query)
+			sessionStorage.setItem('busResult', JSON.stringify(busResult))
+			sessionStorage.setItem('stopResult', JSON.stringify(stopResult))
+		}, 500)()
+	}
 
 	const openBusInfo = (bus: Bus) => {
 		const state = {
@@ -88,6 +102,22 @@
 		on:input={updateResult}
 	/>
 	<div class="result">
+		{#if !query && (!_.isEmpty($favorites.buses) || !_.isEmpty($favorites.stops))}
+			<h2 class="subtitle">즐겨찾기</h2>
+			{#each $favorites.buses as bus}
+				<button class="item" on:click={() => openBusInfo(bus)}>
+					<SvgIcon type="mdi" path={mdiBus} size={32} />
+					{bus.name} ({bus.direction})
+				</button>
+			{/each}
+			{#each $favorites.stops as stop}
+				<button class="item" on:click={() => openArrivalInfo(stop)}>
+					<SvgIcon type="mdi" path={mdiMapMarker} size={32} />
+					{stop.name} ({stop.direction} / {stop.id.slice(-5)})
+				</button>
+			{/each}
+		{/if}
+
 		{#if busResult.length > 0}
 			<h2 class="subtitle">노선번호</h2>
 			{#each busResult as bus}
@@ -146,13 +176,16 @@
 	}
 
 	.item {
-		display: block;
+		display: flex;
 		width: 100%;
 		margin: 16px 0;
 		border: 1px solid color.$white;
 		border-radius: 4px;
 		padding: 16px 8px;
 		background-color: unset;
+
+		align-items: center;
+		justify-content: center;
 
 		font-size: 18px;
 
