@@ -171,6 +171,9 @@
 	}
 
 	.result {
+		margin-top: 16px;
+		overflow: auto;
+
 		flex-grow: 1;
 	}
 
