@@ -38,7 +38,8 @@
 		if (favorite) {
 			busFavorites.remove(data.id)
 		} else {
-			busFavorites.add({ id: data.id, name, direction, directionNum, classNum })
+			const num = name.split('(')[0]
+			busFavorites.add({ id: data.id, num, name, direction, directionNum, classNum })
 		}
 		favorite = !favorite
 	}

@@ -2,6 +2,7 @@ import { writable, get } from 'svelte/store'
 import _ from 'lodash'
 
 interface BusFavorite {
+	num: string
 	id: string
 	name: string
 	direction?: string
