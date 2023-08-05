@@ -1,5 +1,6 @@
 import { writable, get } from 'svelte/store'
 import _ from 'lodash'
+import { browser } from '$app/environment'
 
 interface BusFavorite {
 	num: string
@@ -20,7 +21,19 @@ interface Favorites {
 }
 
 export const favorites = writable<Favorites>({ buses: [], stops: [] })
+if (browser) {
+	favorites.update((s) => {
+		const localData = JSON.parse(localStorage.getItem('favorites') ?? '')
+		if (localData) {
+			s.buses = localData.buses
+			s.stops = localData.stops
+		}
+
+		return s
+	})
+}
 favorites.subscribe((s) => {
+	if (!browser) return
 	localStorage.setItem('favorites', JSON.stringify({ buses: s.buses, stops: s.stops }))
 })
 
