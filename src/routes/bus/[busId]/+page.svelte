@@ -105,7 +105,10 @@
 	}
 
 	.list-wrapper {
-		margin: 16px 0;
+		position: relative;
+		padding: 16px 0;
 		overflow: auto;
+
+		flex-grow: 1;
 	}
 </style>

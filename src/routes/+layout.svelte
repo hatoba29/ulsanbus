@@ -2,6 +2,7 @@
 
 <style lang="scss">
 	main {
+		position: relative;
 		height: 100%;
 		max-width: 480px;
 		margin: 0 auto;

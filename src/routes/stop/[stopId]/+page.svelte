@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
 	import { goto } from '$app/navigation'
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
@@ -18,13 +19,17 @@
 	let direction = ''
 	let favorite: boolean = stopFavorites.has(data.id)
 
+	onMount(() => {
+		const state = history.state as State
+		;({ name, direction } = state)
+	})
+
 	const init = async () => {
 		if (!history.state.name) {
 			window.alert('메인 페이지를 통해서 접근해주세요.')
 			goto('/')
 		}
-		const state = history.state as State
-		;({ name, direction } = state)
+
 		const arrivals = await api.arrivals(data.id)
 		return arrivals
 	}
@@ -50,13 +55,13 @@
 	}
 </script>
 
-{#await init()}
-	<LoadingOverlay />
-{:then arrivals}
-	<Navigation {favorite} on:toggle={toggleFavorite} />
-	<h1 class="title">{name}</h1>
-	<h3 class="subtitle">{direction} ({data.id.slice(-5)})</h3>
-	<div class="list-wrapper">
+<Navigation {favorite} on:toggle={toggleFavorite} />
+<h1 class="title">{name}</h1>
+<h3 class="subtitle">{direction} ({data.id.slice(-5)})</h3>
+<div class="list-wrapper">
+	{#await init()}
+		<LoadingOverlay />
+	{:then arrivals}
 		{#each arrivals as arrival}
 			<div class="item">
 				<div class="item-left">
@@ -73,8 +78,8 @@
 				</div>
 			</div>
 		{/each}
-	</div>
-{/await}
+	{/await}
+</div>
 
 <style lang="scss">
 	@use '@/styles/color';
@@ -88,8 +93,11 @@
 	}
 
 	.list-wrapper {
+		position: relative;
 		margin-top: 16px;
 		overflow: auto;
+
+		flex-grow: 1;
 	}
 	.item {
 		margin: 16px 8px;
