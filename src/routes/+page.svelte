@@ -43,7 +43,6 @@
 		} else {
 			console.log('[init] get data from api')
 			;[buses, stops] = await Promise.all([data.streamed.buses, data.streamed.stops])
-			console.log('[init] fetch complete')
 			localStorage.setItem('data', JSON.stringify({ buses, stops }))
 		}
 	}

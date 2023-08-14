@@ -12,7 +12,6 @@ export const load = async () => {
 	const response: Data = {
 		streamed: {
 			buses: new Promise((resolve) => {
-				console.log('[buses] start')
 				return apiUlsan.allBuses().then((response) => {
 					const allBuses = response.map((row) => ({
 						num: row.BRTNO.toString(),
@@ -22,20 +21,17 @@ export const load = async () => {
 						directionNum: row.DIRECTION,
 						classNum: row.CLASS
 					}))
-					console.log('[buses] end')
 
 					resolve(allBuses)
 				})
 			}),
 			stops: new Promise((resolve) => {
-				console.log('[stops] start')
 				return apiUlsan.allStops().then((response) => {
 					const allStops = response.map((row) => ({
 						id: row.STOPID.toString(),
 						name: row.STOPNAME,
 						direction: row.STOPREMARK
 					}))
-					console.log('[stops] end')
 
 					resolve(allStops)
 				})
