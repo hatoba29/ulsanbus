@@ -6,11 +6,13 @@
 	import { goto } from '$app/navigation'
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
-	import api from '@/tools/api'
-	import type { Data, Bus, Stop } from '@/types/api'
+	import type { Bus, Stop } from '@/types/api'
 	import { favorites } from '@/stores/favorites'
 
-	let data: Data
+	export let data
+
+	let buses: Bus[] = []
+	let stops: Stop[] = []
 	let busResult: Bus[] = []
 	let stopResult: Stop[] = []
 	let query: string
@@ -36,12 +38,12 @@
 
 		if (localData.length > 0) {
 			console.log('[init] localData exists')
-			data = JSON.parse(localData)
+			;({ buses, stops } = JSON.parse(localData))
 			restoreResult()
 		} else {
 			console.log('[init] get data from api')
-			data = await api.init()
-			localStorage.setItem('data', JSON.stringify(data))
+			;[buses, stops] = await Promise.all([data.streamed.buses, data.streamed.stops])
+			localStorage.setItem('data', JSON.stringify({ buses, stops }))
 		}
 	}
 
@@ -65,11 +67,11 @@
 
 			// search bus number
 			if (!isNaN(Number(query[0]))) {
-				busResult = data.buses.filter((r) => r.num.startsWith(query))
+				busResult = buses.filter((r) => r.num.startsWith(query))
 			}
 			// search bus stop
 			const searcher = new Hangul.Searcher(query)
-			stopResult = data.stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
+			stopResult = stops.filter((r) => searcher.search(r.name) >= 0 || r.id.startsWith(query))
 
 			sessionStorage.setItem('query', query)
 			sessionStorage.setItem('busResult', JSON.stringify(busResult))

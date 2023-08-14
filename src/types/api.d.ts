@@ -69,6 +69,8 @@ export interface Route {
 }
 
 export interface Data {
-	buses: Bus[]
-	stops: Stop[]
+	streamed: {
+		buses: Promise<Bus[]>
+		stops: Promise<Stop[]>
+	}
 }
