@@ -4,7 +4,6 @@
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import Navigation from '@/components/Navigation.svelte'
-	import api from '@/tools/api'
 	import dayjs from '@/tools/dayjs'
 	import { stopFavorites } from '@/stores/favorites'
 
@@ -30,7 +29,7 @@
 			goto('/')
 		}
 
-		const arrivals = await api.arrivals(data.id)
+		const arrivals = await data.streamed.arrivals
 		return arrivals
 	}
 

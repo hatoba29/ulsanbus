@@ -1,5 +1,6 @@
-export const load = ({ params }) => {
+export const load = ({ params, data }) => {
 	return {
-		id: params.stopId
+		id: params.stopId,
+		streamed: data.streamed
 	}
 }
