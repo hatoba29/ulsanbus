@@ -62,9 +62,9 @@
 
 <div class="list-wrapper">
 	{#if tab === 'timetable'}
-		<TimetableInfo id={data.id} {directionNum} {classNum} />
+		<TimetableInfo getTimetable={data.streamed.timetable} {directionNum} {classNum} />
 	{:else}
-		<RouteInfo id={data.id} />
+		<RouteInfo getRoute={data.streamed.route} />
 	{/if}
 </div>
 

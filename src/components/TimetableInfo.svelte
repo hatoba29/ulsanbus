@@ -1,8 +1,11 @@
 <script setup lang="ts">
+	import { onMount } from 'svelte'
 	import _ from 'lodash'
+	import { page } from '$app/stores'
+	import { goto } from '$app/navigation'
 
 	import LoadingOverlay from './LoadingOverlay.svelte'
-	import api from '@/tools/api'
+	import type { Timetable } from '@/types/api'
 
 	const Day = {
 		Weekday: 0,
@@ -11,29 +14,41 @@
 	} as const
 	type DayType = (typeof Day)[keyof typeof Day]
 
-	export let id: string
+	export let getTimetable: Promise<Timetable[]>
 	export let directionNum: number
 	export let classNum: number
 
-	let promise: Promise<any>
+	let promise: Promise<any> = new Promise(() => {})
 	let isVacation = false
-	let dayOfWeek: DayType = Day.Weekday
+	let dayOfWeek: DayType
 	let hours: string[]
 
 	const fetch = async () => {
-		const data = await api.timetable(id, isVacation ? dayOfWeek + 3 : dayOfWeek)
+		const data = await getTimetable
 		const timetable = data.filter((d) => d.direction === directionNum && d.classNum === classNum)
 		const timetableByHour = _.groupBy(timetable, 'time.hour')
 		hours = _.sortBy(Object.keys(timetableByHour), Number)
 
 		return timetableByHour
 	}
-	promise = fetch()
+	const refresh = () => {
+		if (dayOfWeek >= 0) {
+			promise = fetch()
+		}
+	}
 
+	onMount(() => {
+		const param = $page.url.searchParams.get('dayOfWeek') ?? '0'
+		dayOfWeek = parseInt(param) as DayType
+	})
+
+	$: if (dayOfWeek >= 0) {
+		goto(`?dayOfWeek=${isVacation ? dayOfWeek + 3 : dayOfWeek}`)
+	}
 	$: {
-		promise = fetch()
+		refresh()
 		// This line is trick to make this reactive statement depends on below variables
-		;[isVacation, dayOfWeek]
+		;[getTimetable]
 	}
 </script>
 

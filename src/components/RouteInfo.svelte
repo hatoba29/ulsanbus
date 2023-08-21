@@ -1,11 +1,11 @@
 <script setup lang="ts">
 	import LoadingOverlay from './LoadingOverlay.svelte'
-	import api from '@/tools/api'
+	import type { Route } from '@/types/api'
 
-	export let id: string
+	export let getRoute: Promise<Route[]>
 
 	const init = async () => {
-		const route = api.route(id)
+		const route = await getRoute
 		return route
 	}
 </script>
