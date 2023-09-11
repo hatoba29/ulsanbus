@@ -70,6 +70,7 @@
 
 <style lang="scss">
 	@use '@/styles/color';
+	@use '@/styles/button';
 
 	.title,
 	.subtitle {
@@ -86,14 +87,13 @@
 		margin-top: 8px;
 	}
 	.tab {
-		border: none;
+		@extend %button;
+
 		border-bottom: 1px solid color.$white;
 		padding: 3px;
-		background-color: unset;
 
 		flex-grow: 1;
-
-		cursor: pointer;
+		justify-content: center;
 
 		font-size: 18px;
 		font-weight: bold;

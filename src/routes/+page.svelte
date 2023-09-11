@@ -156,6 +156,7 @@
 
 <style lang="scss">
 	@use '@/styles/color';
+	@use '@/styles/button';
 
 	.title {
 		font-size: 32px;
@@ -198,23 +199,20 @@
 	}
 
 	.item {
-		display: flex;
+		@extend %button;
+
 		width: 100%;
 		margin: 16px 0;
 		border: 1px solid color.$white;
 		border-radius: 4px;
 		padding: 14px 8px;
-		background-color: unset;
 
-		align-items: center;
 		gap: 4px;
 
 		font-size: 18px;
 		font-weight: bold;
 		text-align: left;
 		word-break: keep-all;
-
-		cursor: pointer;
 
 		.item-subtitle {
 			margin-top: 4px;

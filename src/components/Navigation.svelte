@@ -33,17 +33,7 @@
 
 <style lang="scss">
 	@use '@/styles/color';
-
-	%button {
-		border: none;
-		padding: 0;
-		background-color: unset;
-
-		display: flex;
-		align-items: center;
-
-		cursor: pointer;
-	}
+	@use '@/styles/button';
 
 	.wrapper {
 		margin-top: 8px;
