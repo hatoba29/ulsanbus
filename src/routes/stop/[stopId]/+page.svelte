@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { goto } from '$app/navigation'
 
 	import LoadingOverlay from '@/components/LoadingOverlay.svelte'
 	import Navigation from '@/components/Navigation.svelte'
@@ -19,16 +18,16 @@
 	let favorite: boolean = stopFavorites.has(data.id)
 
 	onMount(() => {
-		const state = history.state as State
-		;({ name, direction } = state)
+		if (!history.state.name) {
+			window.alert('메인 페이지를 통해서 접근해주세요.')
+			location.pathname = '/'
+		} else {
+			const state = history.state as State
+			;({ name, direction } = state)
+		}
 	})
 
 	const init = async () => {
-		if (!history.state.name) {
-			window.alert('메인 페이지를 통해서 접근해주세요.')
-			goto('/')
-		}
-
 		const arrivals = await data.streamed.arrivals
 		return arrivals
 	}

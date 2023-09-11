@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { goto } from '$app/navigation'
 
 	import Navigation from '@/components/Navigation.svelte'
 	import RouteInfo from '@/components/RouteInfo.svelte'
@@ -28,10 +27,11 @@
 	onMount(() => {
 		if (!history.state.name) {
 			window.alert('메인 페이지를 통해서 접근해주세요.')
-			goto('/')
+			location.pathname = '/'
+		} else {
+			const state = history.state as State
+			;({ name, direction, directionNum, classNum } = state)
 		}
-		const state = history.state as State
-		;({ name, direction, directionNum, classNum } = state)
 	})
 
 	const toggleFavorite = () => {
